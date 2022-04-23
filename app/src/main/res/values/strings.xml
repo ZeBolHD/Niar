@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Niar</string>
+    <string name="logo_text">Погода в вашем городе</string>
+    <string name="hint_user_field">Введите название города</string>
+    <string name="main_button">Узнать погоду</string>
+    <string name="error_userfield">Введите текст</string>
+</resources>
