@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import com.squareup.picasso.Picasso;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText user_field;
     private Button main_button;
     private TextView result_info;
-    private ImageView weather_pic;
+    public ImageView weather_pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                weather_pic.setImageResource(0);
+                Picasso.get().load("http://source.unsplash.com/random").into(weather_pic);
 
                 if(user_field.getText().toString().trim().equals("")) {
                     result_info.setText("Введите текст");
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 reader = new BufferedReader(new InputStreamReader(stream));
 
                 StringBuilder buffer = new StringBuilder();
-                String line = "";
+                String line;
 
                 while((line = reader.readLine())!= null){
                     buffer.append(line).append("\n");
@@ -111,26 +112,102 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result){
             super.onPostExecute(result);
             if(result != null) {
-                JSONObject jsonObject = null;
                 try {
-                    jsonObject = new JSONObject(result);
-                    String wpic = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
-                    result_info.setText("Температура: " + jsonObject.getJSONObject("main").getDouble("temp") + " C" + ("\n")  + ("\n")
+                    JSONObject jsonObject = new JSONObject(result);
+                    String weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
+                    String wpic = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
+                    String weaup = weather.substring(0, 1).toUpperCase() + weather.substring(1).toLowerCase();
+                    result_info.setText(weaup + ("\n")  + ("\n")
+                            + "Температура: " + jsonObject.getJSONObject("main").getDouble("temp") + " C" + ("\n")  + ("\n")
                             + "Ощущается как: " + jsonObject.getJSONObject("main").getDouble("feels_like") + " C"  + ("\n") + ("\n")
                             + "Минимальная температура: " + jsonObject.getJSONObject("main").getDouble("temp_min") + " C" + ("\n") + ("\n")
                             + "Максимальная температура: " + jsonObject.getJSONObject("main").getDouble("temp_max") + " C");
 
-                        if (wpic.equals("Clear"))
-                            weather_pic.setImageResource(R.drawable.sunny);
-
-                        if (wpic.equals("Clouds"))
-                            weather_pic.setImageResource(R.drawable.cloudy);
+                            wpicset(wpic);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }else{
                 result_info.setText("Такого города не существует");
+            }
+        }
+        private void wpicset(String n){
+            switch (n){
+                case "01d":
+                    weather_pic.setImageResource(R.drawable.ic_day_clear);
+                    break;
+
+                case "01n":
+                    weather_pic.setImageResource(R.drawable.ic_night_clear);
+                    break;
+
+                case "02d":
+                    weather_pic.setImageResource(R.drawable.ic_day_sonny_overcast);
+                    break;
+
+                case "02n":
+                    weather_pic.setImageResource(R.drawable.ic_night_overcast);
+                    break;
+
+                case "03d":
+                    weather_pic.setImageResource(R.drawable.ic_cloudy);
+                    break;
+
+                case "03n":
+                    weather_pic.setImageResource(R.drawable.ic_cloudy);
+                    break;
+
+                case "04d":
+                    weather_pic.setImageResource(R.drawable.ic_day_cloudy);
+                    break;
+
+                case "04n":
+                    weather_pic.setImageResource(R.drawable.ic_night_cloudy);
+                    break;
+
+                case "09d":
+                    weather_pic.setImageResource(R.drawable.ic_day_showers);
+                    break;
+
+                case "09n":
+                    weather_pic.setImageResource(R.drawable.ic_night_showers);
+                    break;
+
+                case "10d":
+                    weather_pic.setImageResource(R.drawable.ic_day_rain);
+                    break;
+
+                case "10n":
+                    weather_pic.setImageResource(R.drawable.ic_night_rain);
+                    break;
+
+                case "11d":
+                    weather_pic.setImageResource(R.drawable.ic_day_thunderstorm);
+                    break;
+
+                case "11n":
+                    weather_pic.setImageResource(R.drawable.ic_night_thunderstorm);
+                    break;
+
+                case "13d":
+                    weather_pic.setImageResource(R.drawable.ic_day_snow);
+                    break;
+
+                case "13n":
+                    weather_pic.setImageResource(R.drawable.ic_night_snow);
+                    break;
+
+                case "50d":
+                    weather_pic.setImageResource(R.drawable.ic_day_fog);
+                    break;
+
+                case "50n":
+                    weather_pic.setImageResource(R.drawable.ic_night_fog);
+                    break;
+
+                default:
+                    weather_pic.setImageResource(R.drawable.ic_not_found);
             }
         }
     }

@@ -5,8 +5,27 @@
       <map>
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2985" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/Niar_front.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_cloudy.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_clear.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_cloudy.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_fog.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_rain.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_showers.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_snow.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_sonny_overcast.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_thunderstorm.xml" value="0.131" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_clear.xml" value="0.247" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_cloudy.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_fog.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_overcast.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_rain.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_showers.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_snow.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_night_thunderstorm.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_not_found.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_wi_day_sunny.xml" value="0.247" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/niar.xml" value="0.247" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/layout/activity_main.xml" value="0.20930232558139536" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2985" />
