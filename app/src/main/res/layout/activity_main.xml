@@ -49,6 +49,18 @@
         android:textColorHint="?colorPrimary"
         app:cornerRadius="@android:dimen/thumbnail_width" />
 
+    <ImageButton
+        android:id="@+id/info_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:srcCompat="@drawable/ic_info_icon"
+        android:backgroundTint="?colorPrimary"/>
+
+
+
 
 
 

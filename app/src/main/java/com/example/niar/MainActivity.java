@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     public EditText user_field;
     private Button main_button;
+    private ImageButton info_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         user_field = findViewById(R.id.user_field);
         main_button = findViewById(R.id.main_button);
+        info_button = findViewById(R.id.info_icon);
+
+        info_button.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, info.class);
+            startActivity(intent);
+        });
 
         main_button.setOnClickListener(view -> {
 
@@ -131,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                     LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
                     int day_c = ldt.getDayOfMonth();
 
-                    ArrayList<Integer> dateArray = new ArrayList<Integer>();
+                    ArrayList<Integer> dateArray = new ArrayList<>();
 
                     for(int i = 0; i!=10; i++){
                         instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(i).getInt("dt"));
