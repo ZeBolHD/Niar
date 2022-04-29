@@ -22,13 +22,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText user_field;
+    public EditText user_field;
     private Button main_button;
     private TextView result_info;
     public ImageView weather_pic;
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     String city = user_field.getText().toString();
                     String key = "94c711ac5cd4f8c5b1da48fae97afb5a";
-                    String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + key + "&units=metric&lang=ru";
+                    String url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=10&appid=" + key + "&units=metric&lang=ru";
 
                     new getData().execute(url);
                 }
@@ -113,15 +119,57 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if(result != null) {
                 try {
+
+                    Gson gson = new Gson();
+
                     JSONObject jsonObject = new JSONObject(result);
-                    String weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
-                    String wpic = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
+                    JSONObject dayZero = new JSONObject(jsonObject.getJSONArray("list").getJSONObject(0).toString());
+                    String weather = dayZero.getJSONArray("weather").getJSONObject(0).getString("description");
+                    String wpic = dayZero.getJSONArray("weather").getJSONObject(0).getString("icon");
                     String weaup = weather.substring(0, 1).toUpperCase() + weather.substring(1).toLowerCase();
+
+                    Temp temp_today = gson.fromJson(jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").toString(), Temp.class);
+                    double temp_max = temp_today.temp_max;
+                    double temp_min = temp_today.temp_min;
+
+                    Instant instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(0).getInt("dt"));
+                    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+                    int day_c = ldt.getDayOfMonth();
+
+                    ArrayList<Integer> dateArray = new ArrayList<Integer>();
+
+                    for(int i = 0; i!=10; i++){
+                        instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(i).getInt("dt"));
+
+                        //JSON формат всегда выводит время в UTC
+
+                        ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+                        int day = ldt.getDayOfMonth();
+                        dateArray.add(day);
+                    }
+
+                    for(int i = 0; dateArray.get(i)==day_c; i++) {
+                        String array = jsonObject.getJSONArray("list").getJSONObject(i).toString();
+                        JSONObject wa = new JSONObject(array);
+
+                        double max = wa.getJSONObject("main").getDouble("temp_max");
+                        double min = wa.getJSONObject("main").getDouble("temp_min");
+
+                        if(max>temp_max){
+                            temp_max = max;
+                        }
+                        if(min<temp_min){
+                            temp_min = min;
+                        }
+                    }
+
+
                     result_info.setText(weaup + ("\n")  + ("\n")
-                            + "Температура: " + jsonObject.getJSONObject("main").getDouble("temp") + " C" + ("\n")  + ("\n")
-                            + "Ощущается как: " + jsonObject.getJSONObject("main").getDouble("feels_like") + " C"  + ("\n") + ("\n")
-                            + "Минимальная температура: " + jsonObject.getJSONObject("main").getDouble("temp_min") + " C" + ("\n") + ("\n")
-                            + "Максимальная температура: " + jsonObject.getJSONObject("main").getDouble("temp_max") + " C");
+
+                            + "Температура: " + Math.round(dayZero.getJSONObject("main").getDouble("temp")) + " C" + ("\n")  + ("\n")
+                            + "Ощущается как: " + Math.round(dayZero.getJSONObject("main").getDouble("feels_like")) + " C"  + ("\n") + ("\n")
+                            + "Минимальная температура: " + Math.round(temp_min) + " C" + ("\n") + ("\n")
+                            + "Максимальная температура: " + Math.round(temp_max) + " C");
 
                             wpicset(wpic);
 
@@ -143,19 +191,19 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case "02d":
-                    weather_pic.setImageResource(R.drawable.ic_day_sonny_overcast);
+                    weather_pic.setImageResource(R.drawable.ic_cloudy);
                     break;
 
                 case "02n":
-                    weather_pic.setImageResource(R.drawable.ic_night_overcast);
+                    weather_pic.setImageResource(R.drawable.ic_cloudy);
                     break;
 
                 case "03d":
-                    weather_pic.setImageResource(R.drawable.ic_cloudy);
+                    weather_pic.setImageResource(R.drawable.ic_day_sonny_overcast);
                     break;
 
                 case "03n":
-                    weather_pic.setImageResource(R.drawable.ic_cloudy);
+                    weather_pic.setImageResource(R.drawable.ic_night_overcast);
                     break;
 
                 case "04d":
