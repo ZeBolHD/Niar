@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Niar</string>
-    <string name="logo_text">Погода в вашем городе</string>
+    <string name="logo_text">Niar</string>
+    <string name="logo_text_UP">NIAR</string>
     <string name="hint_user_field">Введите название города</string>
     <string name="main_button">Узнать погоду</string>
     <string name="error_userfield">Введите текст</string>
+    <string name="city_example">Nizhnekamsk</string>
+    <string name="temp_example">Temp</string>
 </resources>

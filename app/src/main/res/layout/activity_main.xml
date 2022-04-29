@@ -4,63 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/siren"
+    android:background="?attr/colorPrimaryVariant"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/logo"
+        android:id="@+id/niar_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/logo_text"
+        android:fontFamily="@font/cabin_sketch_bold"
+        android:text="@string/logo_text_UP"
         android:textAlignment="center"
-        android:textColor="@color/text_color"
-        android:textSize="30sp" />
+        android:textColor="?colorSecondary"
+        android:textSize="130sp" />
+
 
     <EditText
         android:id="@+id/user_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
+        android:layout_below="@+id/niar_logo"
         android:layout_marginHorizontal="50sp"
-        android:layout_marginTop="100sp"
-        android:backgroundTint="@color/persik"
-        android:backgroundTintMode="screen"
+        android:layout_marginTop="120sp"
+        android:background="@drawable/ic_edittext_border"
+        android:backgroundTint="?colorSecondary"
         android:ems="10"
+        android:hapticFeedbackEnabled="false"
         android:hint="@string/hint_user_field"
         android:minHeight="50dp"
+        android:textColor="?colorSecondary"
         android:textAlignment="center"
-        android:textColorHint="@color/white" />
+        android:textColorHint="?colorSecondary" />
+
 
     <Button
         android:id="@+id/main_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/user_field"
-        android:layout_marginHorizontal="130sp"
-        android:layout_marginTop="25sp"
-        android:backgroundTint="@color/persik"
+        android:layout_marginHorizontal="110sp"
+        android:layout_marginTop="20sp"
+        android:backgroundTint="?colorSecondary"
+        android:hapticFeedbackEnabled="true"
         android:hint="@string/main_button"
-        android:textColorHint="@color/white"
+        android:textColorHint="?colorPrimary"
         app:cornerRadius="@android:dimen/thumbnail_width" />
 
-    <TextView
-        android:id="@+id/result_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
-        android:layout_below="@+id/main_button"
-        android:fontFamily="sans-serif-black"
-        android:textAlignment="center"
-        android:textColor="@color/text_color"
-        android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/weather_pic"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/result_info"
-        android:layout_marginTop="100sp" />
+
 
 </RelativeLayout>

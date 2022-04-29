@@ -3,6 +3,7 @@ package com.example.niar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     public EditText user_field;
     private Button main_button;
-    private TextView result_info;
-    public ImageView weather_pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +44,26 @@ public class MainActivity extends AppCompatActivity {
 
         user_field = findViewById(R.id.user_field);
         main_button = findViewById(R.id.main_button);
-        result_info = findViewById(R.id.result_info);
-        weather_pic = findViewById(R.id.weather_pic);
 
-        main_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        main_button.setOnClickListener(view -> {
 
-                Picasso.get().load("http://source.unsplash.com/random").into(weather_pic);
+            if(user_field.getText().toString().trim().equals("")) {
+                Toast.makeText(getApplicationContext(), "Введите текст", Toast.LENGTH_SHORT).show();
+            }else {
+                String city = user_field.getText().toString();
+                String key = "94c711ac5cd4f8c5b1da48fae97afb5a";
+                String url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=10&appid=" + key + "&units=metric&lang=ru";
 
-                if(user_field.getText().toString().trim().equals("")) {
-                    result_info.setText("Введите текст");
-                }else {
-                    String city = user_field.getText().toString();
-                    String key = "94c711ac5cd4f8c5b1da48fae97afb5a";
-                    String url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=10&appid=" + key + "&units=metric&lang=ru";
-
-                    new getData().execute(url);
-                }
+                new getData().execute(url);
+                //startActivity(new Intent(MainActivity.this, weather_result.class));
             }
         });
     }
+
     private class getData extends AsyncTask<String, String, String>{
 
         protected void onPreExecute(){
             super.onPreExecute();
-            result_info.setText("Ожидайте...");
         }
 
         @Override
@@ -125,8 +117,11 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONObject dayZero = new JSONObject(jsonObject.getJSONArray("list").getJSONObject(0).toString());
                     String weather = dayZero.getJSONArray("weather").getJSONObject(0).getString("description");
+                    String weather_description_up = weather.substring(0, 1).toUpperCase() + weather.substring(1).toLowerCase();
+                    String city_name = jsonObject.getJSONObject("city").getString("name");
+                    String city_name_up = city_name.substring(0, 1).toUpperCase() + city_name.substring(1).toLowerCase();
+
                     String wpic = dayZero.getJSONArray("weather").getJSONObject(0).getString("icon");
-                    String weaup = weather.substring(0, 1).toUpperCase() + weather.substring(1).toLowerCase();
 
                     Temp temp_today = gson.fromJson(jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").toString(), Temp.class);
                     double temp_max = temp_today.temp_max;
@@ -163,99 +158,27 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
+                    int temp_current = (int) Math.round(dayZero.getJSONObject("main").getDouble("temp"));
+                    int feels_like_today = (int) Math.round(dayZero.getJSONObject("main").getDouble("feels_like"));
+                    int temp_min_today = (int) Math.round(temp_min);
+                    int temp_max_today = (int) Math.round(temp_max);
 
-                    result_info.setText(weaup + ("\n")  + ("\n")
+                    Intent intent = new Intent(MainActivity.this, weather_result.class);
 
-                            + "Температура: " + Math.round(dayZero.getJSONObject("main").getDouble("temp")) + " C" + ("\n")  + ("\n")
-                            + "Ощущается как: " + Math.round(dayZero.getJSONObject("main").getDouble("feels_like")) + " C"  + ("\n") + ("\n")
-                            + "Минимальная температура: " + Math.round(temp_min) + " C" + ("\n") + ("\n")
-                            + "Максимальная температура: " + Math.round(temp_max) + " C");
-
-                            wpicset(wpic);
+                    intent.putExtra("weather icon", wpic);
+                    intent.putExtra("city name", city_name_up);
+                    intent.putExtra("description", weather_description_up);
+                    intent.putExtra("temp_current", temp_current);
+                    intent.putExtra("feels_like_today", feels_like_today);
+                    intent.putExtra("temp_min_today", temp_min_today);
+                    intent.putExtra("temp_max_today", temp_max_today);
+                    startActivity(intent);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }else{
-                result_info.setText("Такого города не существует");
-            }
-        }
-        private void wpicset(String n){
-            switch (n){
-                case "01d":
-                    weather_pic.setImageResource(R.drawable.ic_day_clear);
-                    break;
-
-                case "01n":
-                    weather_pic.setImageResource(R.drawable.ic_night_clear);
-                    break;
-
-                case "02d":
-                    weather_pic.setImageResource(R.drawable.ic_cloudy);
-                    break;
-
-                case "02n":
-                    weather_pic.setImageResource(R.drawable.ic_cloudy);
-                    break;
-
-                case "03d":
-                    weather_pic.setImageResource(R.drawable.ic_day_sonny_overcast);
-                    break;
-
-                case "03n":
-                    weather_pic.setImageResource(R.drawable.ic_night_overcast);
-                    break;
-
-                case "04d":
-                    weather_pic.setImageResource(R.drawable.ic_day_cloudy);
-                    break;
-
-                case "04n":
-                    weather_pic.setImageResource(R.drawable.ic_night_cloudy);
-                    break;
-
-                case "09d":
-                    weather_pic.setImageResource(R.drawable.ic_day_showers);
-                    break;
-
-                case "09n":
-                    weather_pic.setImageResource(R.drawable.ic_night_showers);
-                    break;
-
-                case "10d":
-                    weather_pic.setImageResource(R.drawable.ic_day_rain);
-                    break;
-
-                case "10n":
-                    weather_pic.setImageResource(R.drawable.ic_night_rain);
-                    break;
-
-                case "11d":
-                    weather_pic.setImageResource(R.drawable.ic_day_thunderstorm);
-                    break;
-
-                case "11n":
-                    weather_pic.setImageResource(R.drawable.ic_night_thunderstorm);
-                    break;
-
-                case "13d":
-                    weather_pic.setImageResource(R.drawable.ic_day_snow);
-                    break;
-
-                case "13n":
-                    weather_pic.setImageResource(R.drawable.ic_night_snow);
-                    break;
-
-                case "50d":
-                    weather_pic.setImageResource(R.drawable.ic_day_fog);
-                    break;
-
-                case "50n":
-                    weather_pic.setImageResource(R.drawable.ic_night_fog);
-                    break;
-
-                default:
-                    weather_pic.setImageResource(R.drawable.ic_not_found);
+                Toast.makeText(getApplicationContext(), "Такого города не существует", Toast.LENGTH_SHORT).show();
             }
         }
     }
