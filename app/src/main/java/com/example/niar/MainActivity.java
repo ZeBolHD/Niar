@@ -3,15 +3,15 @@ package com.example.niar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -35,7 +34,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    public EditText user_field;
+    private EditText user_field;
     private Button main_button;
     private ImageButton info_button;
 
@@ -55,17 +54,34 @@ public class MainActivity extends AppCompatActivity {
 
         main_button.setOnClickListener(view -> {
 
-            if(user_field.getText().toString().trim().equals("")) {
-                Toast.makeText(getApplicationContext(), "Введите текст", Toast.LENGTH_SHORT).show();
-            }else {
-                String city = user_field.getText().toString();
-                String key = "94c711ac5cd4f8c5b1da48fae97afb5a";
-                String url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=10&appid=" + key + "&units=metric&lang=ru";
+            if(networkConnected()) {
 
-                new getData().execute(url);
-                //startActivity(new Intent(MainActivity.this, weather_result.class));
+                if (user_field.getText().toString().trim().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Введите текст", Toast.LENGTH_SHORT).show();
+                } else {
+                    String city = user_field.getText().toString().trim();
+                    String key = "94c711ac5cd4f8c5b1da48fae97afb5a";
+                    String url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&cnt=10&appid=" + key + "&units=metric&lang=ru";
+
+                    new getData().execute(url);
+                    //startActivity(new Intent(MainActivity.this, weather_result.class));
+                }
+            }else{
+                Toast.makeText(getApplicationContext(), "Отсутствует подключение к интернету", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    boolean networkConnected(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo!=null){
+            return networkInfo.isConnected();
+        }else{
+            return false;
+        }
     }
 
     private class getData extends AsyncTask<String, String, String>{
