@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Niar">
         <activity
+            android:name=".weather_error"
+            android:exported="false" />
+        <activity
             android:name=".info"
             android:exported="false" />
         <activity

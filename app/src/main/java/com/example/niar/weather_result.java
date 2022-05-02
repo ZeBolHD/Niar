@@ -8,27 +8,40 @@ import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 
 public class weather_result extends AppCompatActivity {
 
     private TextView weatherInfo;
     private TextView city_name;
     private ImageView weather_pic;
+    private ImageButton back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_result);
 
+        back = findViewById(R.id.back_button);
         city_name = findViewById(R.id.city_name);
         weatherInfo = findViewById(R.id.weather_info);
         weather_pic = findViewById(R.id.weather_pic);
 
         putWeatherText();
+
+        back.setOnClickListener(view -> startActivity(new Intent(weather_result.this, MainActivity.class)));
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,22 +49,69 @@ public class weather_result extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String weather_icon = intent.getStringExtra("weather icon");
-        String city_name_up = intent.getStringExtra("city name");
-        String description = intent.getStringExtra("description");
-        int temp_current = intent.getIntExtra("temp_current", 0);
-        int feels_like_today = intent.getIntExtra("feels_like_today", 0);
-        int temp_min_today = intent.getIntExtra("temp_min_today", 0);
-        int temp_max_today = intent.getIntExtra("temp_max_today", 0);
+        try {
+            JSONObject jsonObject = new JSONObject(intent.getStringExtra("jsonData"));
+            JSONObject dayZero = new JSONObject(jsonObject.getJSONArray("list").getJSONObject(0).toString());
+            String weather = dayZero.getJSONArray("weather").getJSONObject(0).getString("description");
+            String weather_description_up = weather.substring(0, 1).toUpperCase() + weather.substring(1).toLowerCase();
+            String city_n = jsonObject.getJSONObject("city").getString("name");
+            String city_name_up = city_n.substring(0, 1).toUpperCase() + city_n.substring(1).toLowerCase();
 
-        city_name.setText(city_name_up);
+            String weather_icon = dayZero.getJSONArray("weather").getJSONObject(0).getString("icon");
 
-        weatherInfo.setText(description + ("\n") + ("\n")
-                + "Температура: " + temp_current + " C" + ("\n") + ("\n")
-                + "Ощущается как: " + feels_like_today + " C" + ("\n") + ("\n")
-                + "Минимальная температура: " + temp_min_today + " C" + ("\n") + ("\n")
-                + "Максимальная температура: " + temp_max_today + " C");
-        wpicSet(weather_icon);
+            double temp_max = jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").getDouble("temp_max");
+            double temp_min = jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").getDouble("temp_min");
+
+            Instant instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(0).getInt("dt"));
+            LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+            int day_c = ldt.getDayOfMonth();
+
+            ArrayList<Integer> dateArray = new ArrayList<>();
+
+            for (int i = 0; i != 10; i++) {
+                instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(i).getInt("dt"));
+
+                //JSON формат всегда выводит время в UTC
+
+                ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+                int day = ldt.getDayOfMonth();
+                dateArray.add(day);
+            }
+
+            for (int i = 0; dateArray.get(i) == day_c; i++) {
+                String array = jsonObject.getJSONArray("list").getJSONObject(i).toString();
+                JSONObject wa = new JSONObject(array);
+
+                double max = wa.getJSONObject("main").getDouble("temp_max");
+                double min = wa.getJSONObject("main").getDouble("temp_min");
+
+                if (max > temp_max) {
+                    temp_max = max;
+                }
+                if (min < temp_min) {
+                    temp_min = min;
+                }
+            }
+
+            int temp_current = (int) Math.round(dayZero.getJSONObject("main").getDouble("temp"));
+            int feels_like_today = (int) Math.round(dayZero.getJSONObject("main").getDouble("feels_like"));
+            int temp_min_today = (int) Math.round(temp_min);
+            int temp_max_today = (int) Math.round(temp_max);
+
+            city_name.setText(city_name_up);
+
+            weatherInfo.setVisibility(View.VISIBLE);
+            weatherInfo.setText(weather_description_up + ("\n") + ("\n")
+                    + "Температура: " + temp_current + " C" + ("\n") + ("\n")
+                    + "Ощущается как: " + feels_like_today + " C" + ("\n") + ("\n")
+                    + "Минимальная температура: " + temp_min_today + " C" + ("\n") + ("\n")
+                    + "Максимальная температура: " + temp_max_today + " C");
+
+            wpicSet(weather_icon);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void wpicSet(String n) {

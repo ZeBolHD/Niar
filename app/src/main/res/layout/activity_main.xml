@@ -56,8 +56,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        app:srcCompat="@drawable/ic_info_icon"
-        android:backgroundTint="?colorPrimary"/>
+        android:backgroundTint="?colorPrimary"
+        app:srcCompat="@drawable/ic_info_icon" />
 
 
 

@@ -55,8 +55,14 @@ public class MainActivity extends AppCompatActivity {
         main_button.setOnClickListener(view -> {
 
             if(networkConnected()) {
+                if(user_field.getText().toString().equals("ачуна")){
 
-                if (user_field.getText().toString().trim().equals("")) {
+                    Intent intent = new Intent(MainActivity.this, weather_error.class);
+                    intent.putExtra("error", "easter");
+
+                    startActivity(intent);
+                }
+                else if (user_field.getText().toString().trim().equals("")) {
                     Toast.makeText(getApplicationContext(), "Введите текст", Toast.LENGTH_SHORT).show();
                 } else {
                     String city = user_field.getText().toString().trim();
@@ -129,80 +135,22 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(String result){
             super.onPostExecute(result);
             if(result != null) {
-                try {
 
-                    Gson gson = new Gson();
+                Intent intent = new Intent(MainActivity.this, weather_result.class);
 
-                    JSONObject jsonObject = new JSONObject(result);
-                    JSONObject dayZero = new JSONObject(jsonObject.getJSONArray("list").getJSONObject(0).toString());
-                    String weather = dayZero.getJSONArray("weather").getJSONObject(0).getString("description");
-                    String weather_description_up = weather.substring(0, 1).toUpperCase() + weather.substring(1).toLowerCase();
-                    String city_name = jsonObject.getJSONObject("city").getString("name");
-                    String city_name_up = city_name.substring(0, 1).toUpperCase() + city_name.substring(1).toLowerCase();
+                intent.putExtra("jsonData", result);
+                startActivity(intent);
 
-                    String wpic = dayZero.getJSONArray("weather").getJSONObject(0).getString("icon");
-
-                    Temp temp_today = gson.fromJson(jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").toString(), Temp.class);
-                    double temp_max = temp_today.temp_max;
-                    double temp_min = temp_today.temp_min;
-
-                    Instant instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(0).getInt("dt"));
-                    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
-                    int day_c = ldt.getDayOfMonth();
-
-                    ArrayList<Integer> dateArray = new ArrayList<>();
-
-                    for(int i = 0; i!=10; i++){
-                        instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(i).getInt("dt"));
-
-                        //JSON формат всегда выводит время в UTC
-
-                        ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
-                        int day = ldt.getDayOfMonth();
-                        dateArray.add(day);
-                    }
-
-                    for(int i = 0; dateArray.get(i)==day_c; i++) {
-                        String array = jsonObject.getJSONArray("list").getJSONObject(i).toString();
-                        JSONObject wa = new JSONObject(array);
-
-                        double max = wa.getJSONObject("main").getDouble("temp_max");
-                        double min = wa.getJSONObject("main").getDouble("temp_min");
-
-                        if(max>temp_max){
-                            temp_max = max;
-                        }
-                        if(min<temp_min){
-                            temp_min = min;
-                        }
-                    }
-
-                    int temp_current = (int) Math.round(dayZero.getJSONObject("main").getDouble("temp"));
-                    int feels_like_today = (int) Math.round(dayZero.getJSONObject("main").getDouble("feels_like"));
-                    int temp_min_today = (int) Math.round(temp_min);
-                    int temp_max_today = (int) Math.round(temp_max);
-
-                    Intent intent = new Intent(MainActivity.this, weather_result.class);
-
-                    intent.putExtra("weather icon", wpic);
-                    intent.putExtra("city name", city_name_up);
-                    intent.putExtra("description", weather_description_up);
-                    intent.putExtra("temp_current", temp_current);
-                    intent.putExtra("feels_like_today", feels_like_today);
-                    intent.putExtra("temp_min_today", temp_min_today);
-                    intent.putExtra("temp_max_today", temp_max_today);
-                    startActivity(intent);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }else{
-                Toast.makeText(getApplicationContext(), "Такого города не существует", Toast.LENGTH_SHORT).show();
+                String error = "city error";
+
+                Intent intent = new Intent(MainActivity.this, weather_error.class);
+                intent.putExtra("error", error);
+                startActivity(intent);
             }
         }
     }

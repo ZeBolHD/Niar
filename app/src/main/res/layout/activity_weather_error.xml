@@ -5,42 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryVariant"
-    tools:context=".weather_result">
-
+    tools:context=".weather_error">
 
     <TextView
-        android:id="@+id/city_name"
+        android:id="@+id/error"
+        android:text="@string/error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70sp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/city_example"
         android:textAlignment="center"
         android:textColor="?colorSecondary"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        />
 
     <TextView
-        android:id="@+id/weather_info"
+        android:id="@+id/error_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/city_name"
-        android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="250sp"
-        android:background="@drawable/ic_rectangle"
-        android:backgroundTint="?colorSecondary"
-        android:text="@string/temp_example"
+        android:layout_below="@+id/error"
         android:textAlignment="center"
-        android:textColor="?colorPrimary"
+        android:layout_marginTop="100sp"
         android:textSize="20sp"
-        android:visibility="visible" />
+        android:textColor="?colorSecondary"
+        />
 
     <ImageView
-        android:id="@+id/weather_pic"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_below="@+id/city_name"
+        android:id="@+id/error_pic"
+        android:layout_width="250sp"
+        android:layout_height="250sp"
+        android:layout_below="@+id/error_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="100sp"
+        app:srcCompat="@drawable/ic_error"
         app:tint="?colorSecondary" />
 
     <ImageButton
@@ -51,8 +48,6 @@
         android:layout_marginStart="10sp"
         android:backgroundTint="?colorPrimary"
         app:srcCompat="@drawable/ic_back" />
-
-
 
 
 </RelativeLayout>

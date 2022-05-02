@@ -7,4 +7,5 @@
     <string name="error_userfield">Введите текст</string>
     <string name="city_example">Nizhnekamsk</string>
     <string name="temp_example">Temp</string>
+    <string name="error">Ошибка</string>
 </resources>

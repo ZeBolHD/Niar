@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2985" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/Niar_front.xml" value="0.131" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_back.xml" value="0.3635" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_cloudy.xml" value="0.247" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_clear.xml" value="0.247" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_cloudy.xml" value="0.247" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_sonny_overcast.xml" value="0.247" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_day_thunderstorm.xml" value="0.131" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_edittext_border.xml" value="0.1935" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_error.xml" value="0.254" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_info_icon.xml" value="0.3635" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.247" />
@@ -36,6 +38,7 @@
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/drawable/niar.xml" value="0.247" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/layout/activity_info.xml" value="0.3625" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/layout/activity_main.xml" value="0.34798534798534797" />
+        <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/layout/activity_weather_error.xml" value="0.2484375" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/layout/activity_weather_result.xml" value="0.3625" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/layout/weather.xml" value="0.3625" />
         <entry key="..\:/Users/Artem/AndroidStudioProjects/Niar/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2985" />
