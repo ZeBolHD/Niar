@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimaryVariant"
+    android:background="?colorPrimary"
     tools:context=".weather_result">
 
 
@@ -12,35 +12,115 @@
         android:id="@+id/city_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70sp"
+        android:layout_marginTop="20sp"
         android:fontFamily="sans-serif-black"
         android:text="@string/city_example"
         android:textAlignment="center"
         android:textColor="?colorSecondary"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/weather_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/city_name"
+        android:layout_below="@+id/current_temp"
         android:layout_marginHorizontal="30sp"
-        android:layout_marginTop="250sp"
+        android:layout_marginTop="100sp"
         android:background="@drawable/ic_rectangle"
         android:backgroundTint="?colorSecondary"
         android:text="@string/temp_example"
         android:textAlignment="center"
         android:textColor="?colorPrimary"
         android:textSize="20sp"
-        android:visibility="visible" />
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/current_temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weather_pic"
+        android:layout_marginTop="25sp"
+        android:fontFamily="sans-serif-black"
+        android:textAlignment="center"
+        android:textColor="?colorSecondary"
+        android:textSize="80sp" />
+
+    <TextView
+        android:id="@+id/current_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/current_temp"
+        android:layout_marginTop="20sp"
+        android:fontFamily="sans-serif-black"
+        android:textAlignment="center"
+        android:textColor="?colorSecondary"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/wind_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/current_description"
+        android:layout_marginTop="30sp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/wind"
+        android:textAlignment="center"
+        android:textColor="?colorSecondary" />
+
+    <TextView
+        android:id="@+id/current_wind"
+        android:layout_width="80sp"
+        android:layout_height="20sp"
+        android:layout_below="@id/wind_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5sp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/wind"
+        android:textAlignment="center"
+        android:textColor="?colorSecondary"
+        android:textSize="15sp"
+        app:drawableLeftCompat="@drawable/ic_wind"
+        app:drawableTint="?colorSecondary" />
+
+    <TextView
+        android:id="@+id/current_temp_max"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginStart="50sp"
+        android:layout_below="@id/current_wind"
+        android:layout_marginTop="15sp"
+        android:textSize="40sp"
+        android:fontFamily="sans-serif-black"
+        android:textColor="?colorSecondary"
+        android:text="@string/temp_example"
+        app:drawableRightCompat="@drawable/ic_temp_max"
+        app:drawableTint="?colorSecondary"/>
+
+    <TextView
+        android:id="@+id/current_temp_min"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50sp"
+        android:layout_below="@id/current_wind"
+        android:layout_marginTop="15sp"
+        android:textSize="40sp"
+        android:fontFamily="sans-serif-black"
+        android:textColor="?colorSecondary"
+        android:text="@string/temp_example"
+        app:drawableRightCompat="@drawable/ic_temp_min"
+        app:drawableTint="?colorSecondary"/>
 
     <ImageView
         android:id="@+id/weather_pic"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_below="@+id/city_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40sp"
+        android:layout_marginTop="50sp"
+        app:srcCompat="@drawable/ic_not_found"
         app:tint="?colorSecondary" />
 
     <ImageButton

@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,6 +29,11 @@ public class weather_result extends AppCompatActivity {
     private TextView city_name;
     private ImageView weather_pic;
     private ImageButton back;
+    private TextView current_temp;
+    private TextView current_description;
+    private TextView current_wind;
+    private TextView current_temp_min;
+    private TextView current_temp_max;
 
 
     @Override
@@ -38,6 +45,11 @@ public class weather_result extends AppCompatActivity {
         city_name = findViewById(R.id.city_name);
         weatherInfo = findViewById(R.id.weather_info);
         weather_pic = findViewById(R.id.weather_pic);
+        current_temp = findViewById(R.id.current_temp);
+        current_description = findViewById(R.id.current_description);
+        current_wind = findViewById(R.id.current_wind);
+        current_temp_min = findViewById(R.id.current_temp_min);
+        current_temp_max = findViewById(R.id.current_temp_max);
 
         putWeatherText();
 
@@ -61,6 +73,7 @@ public class weather_result extends AppCompatActivity {
 
             double temp_max = jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").getDouble("temp_max");
             double temp_min = jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").getDouble("temp_min");
+            int windSpeed = (int) Math.round(jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("wind").getDouble("speed"));
 
             Instant instant = Instant.ofEpochSecond(jsonObject.getJSONArray("list").getJSONObject(0).getInt("dt"));
             LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
@@ -100,12 +113,21 @@ public class weather_result extends AppCompatActivity {
 
             city_name.setText(city_name_up);
 
-            weatherInfo.setVisibility(View.VISIBLE);
+            weatherInfo.setVisibility(View.INVISIBLE);
             weatherInfo.setText(weather_description_up + ("\n") + ("\n")
                     + "Температура: " + temp_current + " C" + ("\n") + ("\n")
                     + "Ощущается как: " + feels_like_today + " C" + ("\n") + ("\n")
                     + "Минимальная температура: " + temp_min_today + " C" + ("\n") + ("\n")
                     + "Максимальная температура: " + temp_max_today + " C");
+
+            current_temp.setText(temp_current + "°");
+
+            current_temp_min.setText(temp_min_today + "°");
+            current_temp_max.setText(temp_max_today + "°");
+
+            current_description.setText(weather_description_up);
+
+            current_wind.setText(windSpeed + "м/c");
 
             wpicSet(weather_icon);
 

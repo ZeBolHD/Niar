@@ -11,6 +11,9 @@ public class weather_error extends AppCompatActivity {
 
     private TextView error_text;
     private ImageButton back;
+    private String error;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,16 +24,18 @@ public class weather_error extends AppCompatActivity {
         error_text = findViewById(R.id.error_text);
 
         Intent intent = getIntent();
+        error = intent.getStringExtra("error");
 
-        String error = intent.getStringExtra("error");
-
-
-        switch (intent.getStringExtra("error")) {
-            case "city error":
+        switch (error){
+            case "city":
                 error_text.setText("Такого города не существует");
+                break;
             case "easter":
                 error_text.setText("Нормально общайся");
+                break;
         }
+
+        intent.removeExtra("error");
 
         back.setOnClickListener(view -> startActivity(new Intent(weather_error.this, MainActivity.class)));
     }

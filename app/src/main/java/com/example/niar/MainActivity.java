@@ -55,10 +55,11 @@ public class MainActivity extends AppCompatActivity {
         main_button.setOnClickListener(view -> {
 
             if(networkConnected()) {
-                if(user_field.getText().toString().equals("ачуна")){
+                if(user_field.getText().toString().equalsIgnoreCase("ачуна")){
 
+                    String error_easter = "easter";
                     Intent intent = new Intent(MainActivity.this, weather_error.class);
-                    intent.putExtra("error", "easter");
+                    intent.putExtra("error", error_easter);
 
                     startActivity(intent);
                 }
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }else{
-                String error = "city error";
+                String error = "city";
 
                 Intent intent = new Intent(MainActivity.this, weather_error.class);
                 intent.putExtra("error", error);

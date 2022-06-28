@@ -6,6 +6,7 @@
     <string name="main_button">Узнать погоду</string>
     <string name="error_userfield">Введите текст</string>
     <string name="city_example">Nizhnekamsk</string>
-    <string name="temp_example">Temp</string>
+    <string name="temp_example">10°</string>
     <string name="error">Ошибка</string>
+    <string name="wind">Ветер</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimaryVariant"
+    android:background="?colorPrimary"
     tools:context=".MainActivity">
 
     <TextView
@@ -28,11 +28,12 @@
         android:background="@drawable/ic_edittext_border"
         android:backgroundTint="?colorSecondary"
         android:ems="10"
+        android:fontFamily="sans-serif"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/hint_user_field"
         android:minHeight="50dp"
-        android:textColor="?colorSecondary"
         android:textAlignment="center"
+        android:textColor="?colorSecondary"
         android:textColorHint="?colorSecondary" />
 
 
@@ -43,6 +44,7 @@
         android:layout_below="@+id/user_field"
         android:layout_marginHorizontal="110sp"
         android:layout_marginTop="20sp"
+        android:fontFamily="sans-serif-black"
         android:backgroundTint="?colorSecondary"
         android:hapticFeedbackEnabled="true"
         android:hint="@string/main_button"
